@@ -5,7 +5,6 @@ import plotly.express as px
 import plotly.graph_objects as go
 import plotly.figure_factory as ff
 import dash
-from jupyter_dash import JupyterDash
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
@@ -88,7 +87,7 @@ gss_clean['education_bins'] = pd.cut(gss_clean['education'], [0, 12, 16, 17, 19,
                                    labels=['High School or Less','Some College','Undergrad Degree','Masters','>Masters'])
 x_cols = ['satjob','relationship', 'male_breadwinner', 'men_bettersuited', 'child_suffer', 'men_overwork']
 group_by_cols = ['sex', 'region','education_bins']
-app = JupyterDash(__name__, external_stylesheets=external_stylesheets)
+app = dash.dash(__name__, external_stylesheets=external_stylesheets)
 app.layout = html.Div(  [
     html.H1("Understanding the Gender Wage Gap"),
         
