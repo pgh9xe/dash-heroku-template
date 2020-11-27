@@ -87,7 +87,7 @@ gss_clean['education_bins'] = pd.cut(gss_clean['education'], [0, 12, 16, 17, 19,
                                    labels=['High School or Less','Some College','Undergrad Degree','Masters','>Masters'])
 x_cols = ['satjob','relationship', 'male_breadwinner', 'men_bettersuited', 'child_suffer', 'men_overwork']
 group_by_cols = ['sex', 'region','education_bins']
-app = dash.dash(__name__, external_stylesheets=external_stylesheets)
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 app.layout = html.Div(  [
     html.H1("Understanding the Gender Wage Gap"),
         
