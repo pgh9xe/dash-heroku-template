@@ -87,7 +87,7 @@ gss_clean['education_bins'] = pd.cut(gss_clean['education'], [0, 12, 16, 17, 19,
                                    labels=['High School or Less','Some College','Undergrad Degree','Masters','>Masters'])
 x_cols = ['satjob','relationship', 'male_breadwinner', 'men_bettersuited', 'child_suffer', 'men_overwork']
 group_by_cols = ['sex', 'region','education_bins']
-app = JupyterDash(__name__, external_stylesheets=external_stylesheets)
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 app.layout = html.Div(  [
     html.H1("Understanding the Gender Wage Gap"),
         
@@ -159,4 +159,6 @@ def make_figure(x, y):
         y="Count", color = y, barmode = 'group'
 )
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=True,
+                  port = 8050, 
+                  host = '0.0.0.0')
