@@ -87,6 +87,13 @@ gss_clean['education_bins'] = pd.cut(gss_clean['education'], [0, 12, 16, 17, 19,
                                    labels=['High School or Less','Some College','Undergrad Degree','Masters','>Masters'])
 x_cols = ['satjob','relationship', 'male_breadwinner', 'men_bettersuited', 'child_suffer', 'men_overwork']
 group_by_cols = ['sex', 'region','education_bins']
+
+question_dict = {'satjob':"On the whole, how satisfied are you with the work you do?",'relationship':"A working mother can establish just as warm and secure a relationship with her children as a mother who does not work.",
+                'male_breadwinner': "It is much better for everyone involved if the man is the achiever outside the home and the woman takes care of the home and family.",
+                'men_bettersuited':"Most men are better suited emotionally for politics than are most women.",
+                'child_suffer':"A preschool child is likely to suffer if his or her mother works.",
+                'men_overwork':"Family life often suffers because men concentrate too much on their work."}
+
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
 app.layout = html.Div(  [
@@ -104,8 +111,9 @@ app.layout = html.Div(  [
     html.Div([
             html.H3("x-axis feature"),
             dcc.Dropdown(id='x-axis',
-                         options=[{'label': i, 'value': i} for i in x_cols],
-                         value='satjob'),
+                         options=[{'label': question_dict[i], 'value': i} for i in x_cols],
+                         value='satjob',
+                        optionHeight = 100),
             html.H3("group-by feature"),
             dcc.Dropdown(id='group_by',
                          options=[{'label': i, 'value': i} for i in group_by_cols],
@@ -155,9 +163,11 @@ def make_figure(x, y):
     bar = bar.reset_index()
     bar = bar.rename({0:'Count'}, axis=1)
     return px.bar(
-        bar,
-        x=x,
-        y="Count", color = y, barmode = 'group'
+      bar,
+      x=x,
+      y="Count", color = y, barmode = 'group',
+      labels = {x:question_dict[x]}
+    
 )
 if __name__ == '__main__':
     app.run_server(debug=True,
